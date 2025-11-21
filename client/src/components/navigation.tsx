@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [location, setLocation] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,17 +18,22 @@ export function Navigation() {
   }, []);
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-      setIsMobileMenuOpen(false);
+    setIsMobileMenuOpen(false);
+    
+    if (location !== "/") {
+      sessionStorage.setItem('scrollToSection', id);
+      setLocation("/");
+    } else {
+      const element = document.getElementById(id);
+      if (element) {
+        const offset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
     }
   };
 
@@ -35,7 +41,7 @@ export function Navigation() {
     { label: "Home", href: "hero", isRoute: false },
     { label: "About", href: "about", isRoute: false },
     { label: "Services", href: "/services", isRoute: true },
-    { label: "Case Studies", href: "case-studies", isRoute: false },
+    { label: "Portfolio", href: "portfolio", isRoute: false },
     { label: "Contact", href: "contact", isRoute: false },
   ];
 

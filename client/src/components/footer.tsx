@@ -1,20 +1,25 @@
 import { MapPin, Phone, Mail } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [location, setLocation] = useLocation();
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+    if (location !== "/") {
+      sessionStorage.setItem('scrollToSection', id);
+      setLocation("/");
+    } else {
+      const element = document.getElementById(id);
+      if (element) {
+        const offset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
     }
   };
 
@@ -22,7 +27,7 @@ export function Footer() {
     { label: "Home", href: "hero", isRoute: false },
     { label: "About", href: "about", isRoute: false },
     { label: "Services", href: "/services", isRoute: true },
-    { label: "Case Studies", href: "case-studies", isRoute: false },
+    { label: "Portfolio", href: "portfolio", isRoute: false },
     { label: "Contact", href: "contact", isRoute: false },
   ];
 

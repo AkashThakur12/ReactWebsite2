@@ -9,11 +9,18 @@ import {
   Database, 
   Zap, 
   MessageSquare,
-  ArrowRight
+  ArrowRight,
+  Plane
 } from "lucide-react";
 
 export function Services() {
   const services = [
+    {
+      icon: Plane,
+      title: "Drone Survey",
+      description:
+        "Advanced drone-based surveying solutions for mining, construction, agriculture, infrastructure inspection, and various industrial applications with precise aerial data collection.",
+    },
     {
       icon: Briefcase,
       title: "Manpower Services",
