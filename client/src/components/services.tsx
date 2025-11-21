@@ -1,6 +1,7 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
 import { 
   Briefcase, 
   FileCheck, 
@@ -85,14 +86,16 @@ export function Services() {
                 <CardDescription className="text-base leading-relaxed mb-4">
                   {service.description}
                 </CardDescription>
-                <Button
-                  variant="ghost"
-                  className="p-0 h-auto font-medium hover:text-primary group"
-                  data-testid={`button-service-learn-${index}`}
-                >
-                  Learn More
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
+                <Link href="/services">
+                  <Button
+                    variant="ghost"
+                    className="p-0 h-auto font-medium hover:text-primary group"
+                    data-testid={`button-service-learn-${index}`}
+                  >
+                    Learn More
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           ))}

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
 
 export function Navigation() {
@@ -31,11 +32,11 @@ export function Navigation() {
   };
 
   const navLinks = [
-    { label: "Home", href: "hero" },
-    { label: "About", href: "about" },
-    { label: "Services", href: "services" },
-    { label: "Case Studies", href: "case-studies" },
-    { label: "Contact", href: "contact" },
+    { label: "Home", href: "hero", isRoute: false },
+    { label: "About", href: "about", isRoute: false },
+    { label: "Services", href: "/services", isRoute: true },
+    { label: "Case Studies", href: "case-studies", isRoute: false },
+    { label: "Contact", href: "contact", isRoute: false },
   ];
 
   return (
@@ -57,16 +58,24 @@ export function Navigation() {
           </button>
 
           <div className="hidden md:flex items-center gap-2">
-            {navLinks.map((link) => (
-              <Button
-                key={link.href}
-                variant="ghost"
-                onClick={() => scrollToSection(link.href)}
-                data-testid={`link-nav-${link.href}`}
-              >
-                {link.label}
-              </Button>
-            ))}
+            {navLinks.map((link) =>
+              link.isRoute ? (
+                <Link key={link.href} href={link.href}>
+                  <Button variant="ghost" data-testid={`link-nav-${link.href}`}>
+                    {link.label}
+                  </Button>
+                </Link>
+              ) : (
+                <Button
+                  key={link.href}
+                  variant="ghost"
+                  onClick={() => scrollToSection(link.href)}
+                  data-testid={`link-nav-${link.href}`}
+                >
+                  {link.label}
+                </Button>
+              )
+            )}
           </div>
 
           <Button
@@ -84,17 +93,30 @@ export function Navigation() {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-background/98 backdrop-blur-md border-b shadow-lg">
           <div className="px-6 py-4 flex flex-col gap-2">
-            {navLinks.map((link) => (
-              <Button
-                key={link.href}
-                variant="ghost"
-                onClick={() => scrollToSection(link.href)}
-                className="justify-start"
-                data-testid={`link-mobile-nav-${link.href}`}
-              >
-                {link.label}
-              </Button>
-            ))}
+            {navLinks.map((link) =>
+              link.isRoute ? (
+                <Link key={link.href} href={link.href}>
+                  <Button
+                    variant="ghost"
+                    className="justify-start w-full"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    data-testid={`link-mobile-nav-${link.href}`}
+                  >
+                    {link.label}
+                  </Button>
+                </Link>
+              ) : (
+                <Button
+                  key={link.href}
+                  variant="ghost"
+                  onClick={() => scrollToSection(link.href)}
+                  className="justify-start"
+                  data-testid={`link-mobile-nav-${link.href}`}
+                >
+                  {link.label}
+                </Button>
+              )
+            )}
           </div>
         </div>
       )}

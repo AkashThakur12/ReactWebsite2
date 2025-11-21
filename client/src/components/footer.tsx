@@ -1,4 +1,5 @@
 import { MapPin, Phone, Mail } from "lucide-react";
+import { Link } from "wouter";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -18,11 +19,11 @@ export function Footer() {
   };
 
   const quickLinks = [
-    { label: "Home", href: "hero" },
-    { label: "About", href: "about" },
-    { label: "Services", href: "services" },
-    { label: "Case Studies", href: "case-studies" },
-    { label: "Contact", href: "contact" },
+    { label: "Home", href: "hero", isRoute: false },
+    { label: "About", href: "about", isRoute: false },
+    { label: "Services", href: "/services", isRoute: true },
+    { label: "Case Studies", href: "case-studies", isRoute: false },
+    { label: "Contact", href: "contact", isRoute: false },
   ];
 
   return (
@@ -45,17 +46,30 @@ export function Footer() {
               Quick Links
             </h4>
             <ul className="space-y-2">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <button
-                    onClick={() => scrollToSection(link.href)}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                    data-testid={`link-footer-${link.href}`}
-                  >
-                    {link.label}
-                  </button>
-                </li>
-              ))}
+              {quickLinks.map((link) =>
+                link.isRoute ? (
+                  <li key={link.href}>
+                    <Link href={link.href}>
+                      <button
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                        data-testid={`link-footer-${link.href}`}
+                      >
+                        {link.label}
+                      </button>
+                    </Link>
+                  </li>
+                ) : (
+                  <li key={link.href}>
+                    <button
+                      onClick={() => scrollToSection(link.href)}
+                      className="text-muted-foreground hover:text-primary transition-colors"
+                      data-testid={`link-footer-${link.href}`}
+                    >
+                      {link.label}
+                    </button>
+                  </li>
+                )
+              )}
             </ul>
           </div>
 

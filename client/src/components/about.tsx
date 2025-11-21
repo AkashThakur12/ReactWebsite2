@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Building2, Users, Award } from "lucide-react";
+import { Link } from "wouter";
 import aboutImage from "@assets/stock_images/modern_office_buildi_81a34715.jpg";
 
 export function About() {
