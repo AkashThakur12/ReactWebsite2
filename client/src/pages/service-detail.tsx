@@ -11,7 +11,7 @@ import { useEffect } from "react";
 export default function ServiceDetail() {
   const params = useParams();
   const [, setLocation] = useLocation();
-  const category = params.category as "drone" | "audit";
+  const category = params.category as "drone" | "audit" | "manpower" | "telemarketing" | "data" | "electrical" | "whatsapp";
   const serviceId = params.serviceId;
 
   const service: ServiceDetail | undefined = getServiceBySlug(category, serviceId || "");
@@ -39,8 +39,17 @@ export default function ServiceDetail() {
     }, 100);
   };
 
-  const categoryLabel =
-    category === "drone" ? "Drone Survey Services" : "Audit Services";
+  const categoryLabels: Record<typeof category, string> = {
+    drone: "Drone Survey Services",
+    audit: "Audit Services",
+    manpower: "Manpower Services",
+    telemarketing: "Tele-Marketing / BPO",
+    data: "Data Management Services",
+    electrical: "Electrical Consultation",
+    whatsapp: "WhatsApp Marketing",
+  };
+
+  const categoryLabel = categoryLabels[category];
 
   return (
     <div className="min-h-screen">
@@ -119,7 +128,7 @@ export default function ServiceDetail() {
 
               <div>
                 <Card className="p-8">
-                  <h3 className="text-2xl font-bold mb-6">Why Choose Us?</h3>
+                  <h3 className="text-2xl font-bold mb-6">Benefits</h3>
                   <ul className="space-y-4">
                     {service.benefits.map((benefit, index) => (
                       <li key={index} className="flex items-start gap-3">
@@ -133,6 +142,61 @@ export default function ServiceDetail() {
             </div>
           </div>
         </section>
+
+        {/* Process Section */}
+        {service.process && (
+          <section className="py-16 md:py-24 bg-muted/30">
+            <div className="max-w-7xl mx-auto px-6">
+              <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+                {service.process.title}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {service.process.steps.map((step, index) => (
+                  <Card
+                    key={index}
+                    className="p-8 text-center hover-elevate transition-all"
+                    data-testid={`card-process-${index}`}
+                  >
+                    <div className="mb-4 mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                      <span className="text-2xl font-bold text-primary">
+                        {step.number}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {step.description}
+                    </p>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Why Choose Us Section */}
+        {service.whyChooseUs && (
+          <section className="py-16 md:py-24 bg-background">
+            <div className="max-w-5xl mx-auto px-6">
+              <Card className="p-8 md:p-12">
+                <h2 className="text-3xl font-bold mb-8 text-center">
+                  Why Choose Rudra Enterprises?
+                </h2>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {service.whyChooseUs.map((reason, index) => (
+                    <li key={index} className="flex items-start gap-4">
+                      <div className="p-2 rounded-lg bg-primary/10 shrink-0">
+                        <Check className="h-5 w-5 text-primary" />
+                      </div>
+                      <span className="text-muted-foreground leading-relaxed">
+                        {reason}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </div>
+          </section>
+        )}
 
         {/* CTA Section */}
         <section
